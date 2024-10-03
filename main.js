@@ -34,16 +34,16 @@ const displayMessage = (message, type = "success") => {
     const messageElement = document.querySelector("#message");
     messageElement.textContent = message;
     messageElement.className = type;
-    setTimeout(() => {
+    setTimeout(() => { // inbuilt asynchronous function, which runs in x milliseconds after being called, other code keeps running during it
         messageElement.textContent = "";
         messageElement.className = "";
-    }, 3000);
+    }, 3000); // runs after 3 seconds (3000 milliseconds)
 };
 
 
 const addCar = (e) => {
     e.preventDefault();
-
+    // try for all possibilities of errors, throw an error in case of one. If error not found, run display message, else, throw error message
     try {
         const license = document.querySelector("#license").value.trim();
         const maker = document.querySelector("#maker").value.trim();
@@ -70,10 +70,10 @@ const addCar = (e) => {
         addCarForm.reset();
         cars.push(newCar);
 
-        localStorage.setItem('cars', JSON.stringify(cars));
+        localStorage.setItem('cars', JSON.stringify(cars)); // store the entered car in localStorage, stringyfy the array
 
-        displayTable();
-        displayMessage("Car added successfully!");
+        displayTable(); // enter car details to a table
+        displayMessage("Car added successfully!"); // run the display message function
 
     } catch (error) {
         displayMessage(error.message, "error");
@@ -81,13 +81,13 @@ const addCar = (e) => {
 };
 
 const loadCarsFromLocalStorage = () => {
-    const storedCars = localStorage.getItem('cars');
+    const storedCars = localStorage.getItem('cars'); // get stringfied array from localStorage
     if (storedCars) {
-        const parsedCars = JSON.parse(storedCars);
-        parsedCars.forEach(carData => {
+        const parsedCars = JSON.parse(storedCars); // parse the array into new array variable
+        parsedCars.forEach(carData => { // for each array object (car), push to the Cars array
             cars.push(new Car(carData.license, carData.maker, carData.model, carData.owner, carData.price, carData.color, carData.year));
         });
-        displayTable();
+        displayTable(); // display the data in a table
     }
 };
 
@@ -123,10 +123,10 @@ const displayTable = () => {
 };
 
 const deleteCar = (index) => {
-    cars.splice(index, 1);
-    localStorage.setItem('cars', JSON.stringify(cars));
-    displayTable();
-    displayMessage("Car deleted successfully!");
+    cars.splice(index, 1); // removes an array object from given index, deletes only 1 object (second value)
+    localStorage.setItem('cars', JSON.stringify(cars)); // update the localStorage 
+    displayTable(); // update the table to display without the removed car object
+    displayMessage("Car deleted successfully!"); // run the message on screen
 };
 
 
