@@ -18,15 +18,15 @@ class Car {
 
     getCarAge() {
         const currentYear = new Date().getFullYear();
-        return currentYear - this.year;
+        return currentYear - this.year; // calculate car age
     }
 
     getDiscountedPrice() {
-        return this.getCarAge() > 10 ? this.price * 0.85 : this.price;
+        return this.getCarAge() > 10 ? this.price * 0.85 : this.price; // if car age is more than 10, display 0.85 times price, else display car price
     }
 
     isEligibleForDiscount() {
-        return this.getCarAge() > 10;
+        return this.getCarAge() > 10; //returns a boolean value
     }
 
 }
@@ -39,12 +39,12 @@ const addCar = (e) => {
         const maker = document.querySelector("#maker").value.trim();
         const model = document.querySelector("#model").value.trim();
         const owner = document.querySelector("#owner").value.trim();
-        const price = parseFloat(document.querySelector("#price").value.trim());
+        const price = parseFloat(document.querySelector("#price").value.trim()); // turn to string
         const color = document.querySelector("#color").value.trim();
-        const year = parseInt(document.querySelector("#year").value.trim());
+        const year = parseInt(document.querySelector("#year").value.trim()); // turn to number
         const currentYear = new Date().getFullYear();
 
-        if (!license || !maker || !model || !owner || isNaN(price) || !color || isNaN(year)) {
+        if (!license || !maker || !model || !owner || isNaN(price) || !color || isNaN(year)) { // if one of these is not given, throw error
             throw new Error("All fields are required and must be valid.");
         }
 
@@ -72,22 +72,22 @@ const displayTable = () => {
     table.innerHTML = table.rows[0].innerHTML;
 
     cars.forEach((car) => {
-        const row = table.insertRow(-1);
+        const row = table.insertRow(-1); // insert a row at the end of the table
 
-        const { license, maker, model, owner, year, color, price } = car;
+        const { license, maker, model, owner, year, color, price } = car; // destruct an objects variables to write less
 
-        const carDetails = [license, maker, model, owner, year, color];
+        const carDetails = [license, maker, model, owner, year, color]; // put the destructured variables into an array
 
         carDetails.forEach(detail => {
-            row.insertCell(-1).textContent = detail ?? 'N/A';
+            row.insertCell(-1).textContent = detail ?? 'N/A'; // create a cell at the end of the row and fill it with a variable, if it's not there, display N/A
         });
 
         row.insertCell(-1).textContent = `${price.toFixed(2)}€`;
 
-        const discountedPrice = car.isEligibleForDiscount()
+        const discountedPrice = car.isEligibleForDiscount() // variable of: if car is eligble for discount, display car price, else No discount
             ? `$${car.getDiscountedPrice().toFixed(2)}`
             : "No Discount";
-        row.insertCell(-1).textContent = discountedPrice;
+        row.insertCell(-1).textContent = discountedPrice; // display variable in the inserted cell in each cars' inserted row
     });
 };
 
@@ -101,7 +101,7 @@ const searchCar = (e) => {
 
     if (foundCar) {
         const originalPrice = foundCar.price.toFixed(2);
-        const discountedPrice = foundCar.isEligibleForDiscount()
+        const discountedPrice = foundCar.isEligibleForDiscount() // the function returns boolean, ? says if yes, then get the discounted price, else "":
             ? `$${foundCar.getDiscountedPrice().toFixed(2)}`
             : "No Discount";
 
